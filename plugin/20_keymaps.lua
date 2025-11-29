@@ -19,6 +19,10 @@ end
 nmap('[p', '<Cmd>exe "put! " . v:register<CR>', 'Paste Above')
 nmap(']p', '<Cmd>exe "put "  . v:register<CR>', 'Paste Below')
 
+-- Save file with Cmd+s (macOS)
+vim.keymap.set('n', '<D-s>', '<Cmd>write<CR>', { desc = 'Save file' })
+vim.keymap.set('i', '<D-s>', '<Cmd>write<CR><Esc>', { desc = 'Save file' })
+
 -- Many general mappings are created by 'mini.basics'. See 'plugin/30_mini.lua'
 
 -- stylua: ignore start
@@ -179,6 +183,7 @@ nmap_leader('gc', '<Cmd>Git commit<CR>',                    'Commit')
 nmap_leader('gC', '<Cmd>Git commit --amend<CR>',            'Commit amend')
 nmap_leader('gd', '<Cmd>Git diff<CR>',                      'Diff')
 nmap_leader('gD', '<Cmd>Git diff -- %<CR>',                 'Diff buffer')
+nmap_leader('gg', '<Cmd>lua Snacks.lazygit()<CR>',          'Lazygit')
 nmap_leader('gl', '<Cmd>' .. git_log_cmd .. '<CR>',         'Log')
 nmap_leader('gL', '<Cmd>' .. git_log_buf_cmd .. '<CR>',     'Log buffer')
 nmap_leader('go', '<Cmd>lua MiniDiff.toggle_overlay()<CR>', 'Toggle overlay')
@@ -219,6 +224,63 @@ nmap_leader('mt', '<Cmd>lua MiniMap.toggle()<CR>',       'Toggle')
 
 -- o is for 'Other'. Common usage:
 -- - `<Leader>oz` - toggle between "zoomed" and regular view of current buffer
+-- - `<Leader>om` - toggle minimal mode (disable syntax, diagnostics, and autocompletion)
+local toggle_minimal_mode = function()
+  local bufnr = vim.api.nvim_get_current_buf()
+
+  -- Check buffer-local minimal mode state
+  if vim.b[bufnr].minimal_mode_enabled then
+    -- Re-enable treesitter
+    if vim.treesitter.start then
+      pcall(vim.treesitter.start, bufnr)
+    end
+
+    -- Re-enable syntax highlighting
+    vim.bo[bufnr].syntax = 'on'
+
+    -- Re-enable LSP semantic tokens
+    for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+      if client.server_capabilities.semanticTokensProvider then
+        vim.lsp.semantic_tokens.start(bufnr, client.id)
+      end
+    end
+
+    -- Re-enable autocompletion
+    vim.b[bufnr].minicompletion_disable = false
+
+    -- Re-enable diagnostics
+    vim.diagnostic.enable(true, { bufnr = bufnr })
+
+    vim.b[bufnr].minimal_mode_enabled = false
+    vim.notify('Minimal mode: OFF', vim.log.levels.INFO)
+  else
+    -- Disable treesitter highlighting
+    if vim.treesitter.stop then
+      pcall(vim.treesitter.stop, bufnr)
+    end
+
+    -- Disable syntax highlighting completely
+    vim.bo[bufnr].syntax = 'off'
+
+    -- Disable LSP semantic tokens
+    for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+      if client.server_capabilities.semanticTokensProvider then
+        vim.lsp.semantic_tokens.stop(bufnr, client.id)
+      end
+    end
+
+    -- Disable autocompletion
+    vim.b[bufnr].minicompletion_disable = true
+
+    -- Disable diagnostics
+    vim.diagnostic.enable(false, { bufnr = bufnr })
+
+    vim.b[bufnr].minimal_mode_enabled = true
+    vim.notify('Minimal mode: ON', vim.log.levels.INFO)
+  end
+end
+
+nmap_leader('om', toggle_minimal_mode,                     'Minimal mode toggle')
 nmap_leader('or', '<Cmd>lua MiniMisc.resize_window()<CR>', 'Resize to default width')
 nmap_leader('ot', '<Cmd>lua MiniTrailspace.trim()<CR>',    'Trim trailspace')
 nmap_leader('oz', '<Cmd>lua MiniMisc.zoom()<CR>',          'Zoom toggle')
