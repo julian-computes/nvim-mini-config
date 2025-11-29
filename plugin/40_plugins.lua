@@ -98,8 +98,9 @@ now_if_args(function()
   -- Use `:h vim.lsp.config()` or 'after/lsp/' directory to configure servers.
   -- Uncomment and tweak the following `vim.lsp.enable()` call to enable servers.
   vim.lsp.enable({
-    'zls',  -- Zig language server
+    'zls', -- Zig language server
     -- For example, if `lua-language-server` is installed, use `'lua_ls'` entry
+    'lua_ls',
   })
 end)
 
@@ -122,6 +123,9 @@ later(function()
     -- Map of filetype to formatters
     -- Make sure that necessary CLI tool is available
     -- formatters_by_ft = { lua = { 'stylua' } },
+    formatters_by_ft = {
+      zig = { 'zigfmt' }
+    }
   })
 end)
 
@@ -187,6 +191,7 @@ later(function()
   add('folke/snacks.nvim')
 
   require('snacks').setup({
+    gitbrowse = {},
     lazygit = {
       -- automatically configure lazygit to use the current colorscheme
       -- and integrate edit with the current neovim instance
@@ -222,3 +227,10 @@ later(function()
   })
 end)
 
+-- URL opener =================================================================
+
+-- Open URLs under cursor with gx using default browser
+later(function()
+  add('sontungexpt/url-open')
+  require('url-open').setup({})
+end)
