@@ -160,3 +160,22 @@ later(function() add('rafamadriz/friendly-snippets') end)
 --   -- Enable only one
 --   vim.cmd('color everforest')
 -- end)
+
+-- Terminal ===================================================================
+
+-- Toggleterm provides a convenient way to manage persistent terminal windows.
+-- It allows toggling terminals with different orientations and configurations.
+later(function()
+  add('akinsho/toggleterm.nvim')
+
+  require('toggleterm').setup({
+    -- Toggle terminal with Ctrl+'
+    open_mapping = [[<C-'>]],
+    -- Use floating terminal by default
+    direction = 'float',
+    -- Configure floating window appearance
+    float_opts = {
+      border = 'curved',
+    },
+  })
+end)
