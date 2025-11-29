@@ -50,6 +50,8 @@ now_if_args(function()
     'lua',
     'vimdoc',
     'markdown',
+    -- Additional languages
+    'zig',
     -- Add here more languages with which you want to use tree-sitter
     -- To see available languages:
     -- - Execute `:=require('nvim-treesitter').get_available()`
@@ -95,9 +97,10 @@ now_if_args(function()
   -- the rules provided by 'nvim-lspconfig'.
   -- Use `:h vim.lsp.config()` or 'after/lsp/' directory to configure servers.
   -- Uncomment and tweak the following `vim.lsp.enable()` call to enable servers.
-  -- vim.lsp.enable({
-  --   -- For example, if `lua-language-server` is installed, use `'lua_ls'` entry
-  -- })
+  vim.lsp.enable({
+    'zls',  -- Zig language server
+    -- For example, if `lua-language-server` is installed, use `'lua_ls'` entry
+  })
 end)
 
 -- Formatting =================================================================
