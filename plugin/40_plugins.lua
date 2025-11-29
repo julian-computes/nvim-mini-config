@@ -176,14 +176,11 @@ later(function()
   add('akinsho/toggleterm.nvim')
 
   require('toggleterm').setup({
-    -- Toggle terminal with Ctrl+'
     open_mapping = [[<C-'>]],
-    -- Use floating terminal by default
-    direction = 'float',
-    -- Configure floating window appearance
-    float_opts = {
-      border = 'curved',
-    },
+    direction = 'horizontal',
+    size = function(_term)
+      return vim.o.lines * 0.35
+    end,
   })
 end)
 
