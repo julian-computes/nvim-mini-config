@@ -62,7 +62,7 @@ _G.Config.leader_group_clues = {
   { mode = 'n', keys = '<Leader>m', desc = '+Map' },
   { mode = 'n', keys = '<Leader>o', desc = '+Other' },
   { mode = 'n', keys = '<Leader>s', desc = '+Session' },
-  { mode = 'n', keys = '<Leader>t', desc = '+Terminal' },
+  { mode = 'n', keys = '<Leader>t', desc = '+Tab' },
   { mode = 'n', keys = '<Leader>v', desc = '+Visits' },
 
   { mode = 'x', keys = '<Leader>g', desc = '+Git' },
@@ -298,9 +298,20 @@ nmap_leader('sn', '<Cmd>lua ' .. session_new .. '<CR>',         'New')
 nmap_leader('sr', '<Cmd>lua MiniSessions.select("read")<CR>',   'Read')
 nmap_leader('sw', '<Cmd>lua MiniSessions.write()<CR>',          'Write current')
 
--- t is for 'Terminal'
-nmap_leader('tT', '<Cmd>horizontal term<CR>', 'Terminal (horizontal)')
-nmap_leader('tt', '<Cmd>vertical term<CR>',   'Terminal (vertical)')
+-- t is for 'Tab'
+nmap_leader('tn', '<Cmd>tabnew<CR>',       'New')
+nmap_leader('t1', '<Cmd>1tabnext<CR>',     'Tab 1')
+nmap_leader('t2', '<Cmd>2tabnext<CR>',     'Tab 2')
+nmap_leader('t3', '<Cmd>3tabnext<CR>',     'Tab 3')
+nmap_leader('t4', '<Cmd>4tabnext<CR>',     'Tab 4')
+nmap_leader('t5', '<Cmd>5tabnext<CR>',     'Tab 5')
+nmap_leader('t6', '<Cmd>6tabnext<CR>',     'Tab 6')
+nmap_leader('t7', '<Cmd>7tabnext<CR>',     'Tab 7')
+nmap_leader('t8', '<Cmd>8tabnext<CR>',     'Tab 8')
+nmap_leader('t9', '<Cmd>9tabnext<CR>',     'Tab 9')
+nmap_leader('t0', '<Cmd>tabonly<CR>',      'Only (close others)')
+nmap_leader('th', '<Cmd>tabprevious<CR>',  'Previous')
+nmap_leader('tl', '<Cmd>tabnext<CR>',      'Next')
 
 -- v is for 'Visits'. Common usage:
 -- - `<Leader>vv` - add    "core" label to current file.
