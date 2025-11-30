@@ -168,6 +168,12 @@ later(function() add('rafamadriz/friendly-snippets') end)
 --   vim.cmd('color everforest')
 -- end)
 
+MiniDeps.now(function()
+  add('folke/tokyonight.nvim')
+
+  vim.cmd('colorscheme tokyonight')
+end)
+
 -- Terminal ===================================================================
 
 -- Toggleterm provides a convenient way to manage persistent terminal windows.
