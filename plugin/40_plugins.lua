@@ -52,6 +52,7 @@ now_if_args(function()
     'markdown',
     -- Additional languages
     'zig',
+    'rust',
     -- Add here more languages with which you want to use tree-sitter
     -- To see available languages:
     -- - Execute `:=require('nvim-treesitter').get_available()`
@@ -101,6 +102,7 @@ now_if_args(function()
     'zls', -- Zig language server
     -- For example, if `lua-language-server` is installed, use `'lua_ls'` entry
     'lua_ls',
+    'rust_analyzer',
   })
 end)
 
@@ -124,7 +126,8 @@ later(function()
     -- Make sure that necessary CLI tool is available
     -- formatters_by_ft = { lua = { 'stylua' } },
     formatters_by_ft = {
-      zig = { 'zigfmt' }
+      zig = { 'zigfmt' },
+      rust = { 'rustfmt' },
     }
   })
 end)
@@ -239,4 +242,13 @@ end)
 later(function()
   add('sontungexpt/url-open')
   require('url-open').setup({})
+end)
+
+-- Rust Cargo.toml management =================================================
+
+-- Crates.nvim provides inline hints and dependency management for Cargo.toml
+-- Shows latest versions, features, and allows easy updates of Rust dependencies
+later(function()
+  add('saecki/crates.nvim')
+  require('crates').setup()
 end)
