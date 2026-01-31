@@ -53,6 +53,8 @@ now_if_args(function()
     -- Additional languages
     'zig',
     'rust',
+    'c',
+    'cpp',
     -- Add here more languages with which you want to use tree-sitter
     -- To see available languages:
     -- - Execute `:=require('nvim-treesitter').get_available()`
@@ -103,6 +105,7 @@ now_if_args(function()
     -- For example, if `lua-language-server` is installed, use `'lua_ls'` entry
     'lua_ls',
     'rust_analyzer',
+    'clangd',
   })
 end)
 
