@@ -247,10 +247,16 @@ end)
 
 -- URL opener =================================================================
 
--- Open URLs under cursor with gx using default browser
+-- Open URLs under cursor with <Leader>x using default browser
 later(function()
   add('sontungexpt/url-open')
-  require('url-open').setup({})
+  require('url-open').setup({
+    -- Disable default gx mapping to avoid conflict with mini.operators
+    keys = {
+      normal = '<Leader>x',
+      visual = '<Leader>x',
+    },
+  })
 end)
 
 -- Rust Cargo.toml management =================================================
