@@ -174,6 +174,7 @@ nmap_leader('fV', '<Cmd>Pick visit_paths<CR>',                  'Visit paths (cw
 -- - `<Leader>go` - toggle 'mini.diff' overlay to show in-buffer unstaged changes
 -- - `<Leader>gd` - show unstaged changes as a patch in separate tabpage
 -- - `<Leader>gL` - show Git log of current file
+-- - `<Leader>gy` - copy git browse URL to clipboard
 local git_log_cmd = [[Git log --pretty=format:\%h\ \%as\ │\ \%s --topo-order]]
 local git_log_buf_cmd = git_log_cmd .. ' --follow -- %'
 
@@ -189,9 +190,11 @@ nmap_leader('gL', '<Cmd>' .. git_log_buf_cmd .. '<CR>',     'Log buffer')
 nmap_leader('go', '<Cmd>lua MiniDiff.toggle_overlay()<CR>', 'Toggle overlay')
 nmap_leader('gO', '<Cmd>lua Snacks.gitbrowse()<CR>',        'Git browse')
 nmap_leader('gs', '<Cmd>lua MiniGit.show_at_cursor()<CR>',  'Show at cursor')
+nmap_leader('gy', '<Cmd>lua Snacks.gitbrowse({ open = function(url) vim.fn.setreg("+", url) vim.notify("Copied: " .. url) end })<CR>', 'Yank browse URL')
 
 xmap_leader('gO', '<Cmd>lua Snacks.gitbrowse()<CR>',      'Git browse')
 xmap_leader('gs', '<Cmd>lua MiniGit.show_at_cursor()<CR>', 'Show at selection')
+xmap_leader('gy', '<Cmd>lua Snacks.gitbrowse({ open = function(url) vim.fn.setreg("+", url) vim.notify("Copied: " .. url) end })<CR>', 'Yank browse URL')
 
 -- l is for 'Language'. Common usage:
 -- - `<Leader>ld` - show more diagnostic details in a floating window
